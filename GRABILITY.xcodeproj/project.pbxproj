@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		076921EA1D22B73F0017C05F /* b.png in Resources */ = {isa = PBXBuildFile; fileRef = 076921E91D22B73F0017C05F /* b.png */; };
+		076921EC1D22B88B0017C05F /* p.png in Resources */ = {isa = PBXBuildFile; fileRef = 076921EB1D22B88B0017C05F /* p.png */; };
 		07D19F311D1E1D1F00C66963 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D19F301D1E1D1F00C66963 /* AppDelegate.swift */; };
 		07D19F331D1E1D1F00C66963 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D19F321D1E1D1F00C66963 /* ViewController.swift */; };
 		07D19F361D1E1D1F00C66963 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07D19F341D1E1D1F00C66963 /* Main.storyboard */; };
 		07D19F391D1E1D1F00C66963 /* GRABILITY.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07D19F371D1E1D1F00C66963 /* GRABILITY.xcdatamodeld */; };
 		07D19F3B1D1E1D1F00C66963 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07D19F3A1D1E1D1F00C66963 /* Assets.xcassets */; };
 		07D19F3E1D1E1D1F00C66963 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07D19F3C1D1E1D1F00C66963 /* LaunchScreen.storyboard */; };
+		07D19F461D1E1E0400C66963 /* ListadoDeCategorias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D19F451D1E1E0400C66963 /* ListadoDeCategorias.swift */; };
+		07D19F481D1E28EE00C66963 /* ListadoDeApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D19F471D1E28EE00C66963 /* ListadoDeApps.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		076921E91D22B73F0017C05F /* b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b.png; sourceTree = "<group>"; };
+		076921EB1D22B88B0017C05F /* p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p.png; sourceTree = "<group>"; };
 		07D19F2D1D1E1D1F00C66963 /* GRABILITY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GRABILITY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D19F301D1E1D1F00C66963 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07D19F321D1E1D1F00C66963 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +30,8 @@
 		07D19F3A1D1E1D1F00C66963 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07D19F3D1D1E1D1F00C66963 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		07D19F3F1D1E1D1F00C66963 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07D19F451D1E1E0400C66963 /* ListadoDeCategorias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListadoDeCategorias.swift; sourceTree = "<group>"; };
+		07D19F471D1E28EE00C66963 /* ListadoDeApps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListadoDeApps.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,8 @@
 		07D19F2F1D1E1D1F00C66963 /* GRABILITY */ = {
 			isa = PBXGroup;
 			children = (
+				076921E91D22B73F0017C05F /* b.png */,
+				076921EB1D22B88B0017C05F /* p.png */,
 				07D19F301D1E1D1F00C66963 /* AppDelegate.swift */,
 				07D19F321D1E1D1F00C66963 /* ViewController.swift */,
 				07D19F341D1E1D1F00C66963 /* Main.storyboard */,
@@ -63,6 +73,8 @@
 				07D19F3C1D1E1D1F00C66963 /* LaunchScreen.storyboard */,
 				07D19F3F1D1E1D1F00C66963 /* Info.plist */,
 				07D19F371D1E1D1F00C66963 /* GRABILITY.xcdatamodeld */,
+				07D19F451D1E1E0400C66963 /* ListadoDeCategorias.swift */,
+				07D19F471D1E28EE00C66963 /* ListadoDeApps.swift */,
 			);
 			path = GRABILITY;
 			sourceTree = "<group>";
@@ -128,6 +140,8 @@
 			files = (
 				07D19F3E1D1E1D1F00C66963 /* LaunchScreen.storyboard in Resources */,
 				07D19F3B1D1E1D1F00C66963 /* Assets.xcassets in Resources */,
+				076921EA1D22B73F0017C05F /* b.png in Resources */,
+				076921EC1D22B88B0017C05F /* p.png in Resources */,
 				07D19F361D1E1D1F00C66963 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,8 +154,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				07D19F331D1E1D1F00C66963 /* ViewController.swift in Sources */,
+				07D19F481D1E28EE00C66963 /* ListadoDeApps.swift in Sources */,
 				07D19F391D1E1D1F00C66963 /* GRABILITY.xcdatamodeld in Sources */,
 				07D19F311D1E1D1F00C66963 /* AppDelegate.swift in Sources */,
+				07D19F461D1E1E0400C66963 /* ListadoDeCategorias.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +309,7 @@
 				07D19F441D1E1D1F00C66963 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
