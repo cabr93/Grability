@@ -79,7 +79,7 @@ class ViewController: UIViewController {
                                     flag = false
                                 }
                             }
-                            cont++
+                            cont += 1
                             j = j + "\(i)"
                         }
                         nombre.text = j
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
                                     flag2 = false
                                 }
                             }
-                            cont2++
+                            cont2 += 1
                             j2 = j2 + "\(i2)"
                         }
                         
