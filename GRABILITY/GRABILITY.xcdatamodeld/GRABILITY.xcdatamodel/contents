@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
-    <elements/>
+    <entity name="Aplicaciones" syncable="YES">
+        <attribute name="autor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contenido" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="descripcion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nombre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posicion" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pertenece" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categorias" inverseName="tiene" inverseEntity="Categorias" syncable="YES"/>
+    </entity>
+    <entity name="Categorias" syncable="YES">
+        <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tiene" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Aplicaciones" inverseName="pertenece" inverseEntity="Aplicaciones" syncable="YES"/>
+    </entity>
+    <fetchRequest name="petCategoria" entity="Categorias" predicateString="categoria == $categoria"/>
+    <fetchRequest name="petCategorias" entity="Categorias"/>
+    <elements>
+        <element name="Aplicaciones" positionX="-18" positionY="27" width="128" height="150"/>
+        <element name="Categorias" positionX="-272" positionY="-0" width="128" height="73"/>
+    </elements>
 </model>

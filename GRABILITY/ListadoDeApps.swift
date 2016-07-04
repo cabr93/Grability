@@ -7,14 +7,24 @@
 //
 
 import UIKit
+import CoreData
+
 
 class ListadoDeApps: UITableViewController {
-    var categorias = ["negocios", "clima", "utilidades", "viaje", "deportes" ,"redes sociales" ,"referencia", "productividad", "foto y video", "noticias", "navegacion", "musica", "estilo de vida", "salud y bellesa", "juegos", "finanzas", "entretenimiento", "educacion", "Libros", "todo", "medical", "revista", "catalogo", "comidas y bebidas"]
+    var categorias = ["negocios", "clima", "utilidades", "viaje", "deportes" ,"redes sociales" ,"referencia", "productividad", "foto y video", "noticias", "navegación", "música", "estilo de vida", "salud y belleza", "juegos", "finanzas", "entretenimiento", "educación", "Libros", "todo", "medical", "revista", "catalogo", "comidas y bebidas"]
     var top:Array<String> = Array<String>()
+    var top2:Array<String> = Array<String>()
+    var descripcion:Array<String> = Array<String>()
+    var categoria:Array<String> = Array<String>()
+    var autor:Array<String> = Array<String>()
+    var posicion: Array<Int> = Array<Int>()
     var imagenes: Array<UIImage> = Array<UIImage>()
+    var imagenes2: Array<UIImage> = Array<UIImage>()
     var tipo:Int = 0
     let urls = "https://itunes.apple.com/us/rss/topfreeapplications/limit=10/genre="
     var urls2 = ""
+    var contexto:NSManagedObjectContext? = nil
+
 
 
     override func viewWillAppear(animated: Bool) {
@@ -46,16 +56,107 @@ class ListadoDeApps: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.contexto = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         urls2 = urls + "\(tipo)" + "/json"
         let url = NSURL(string: urls2)
         let datos:NSData? = NSData(contentsOfURL: url!)
         self.title = categorias[tipo-6000]
         if datos == nil{
-            let alert = UIAlertController(title:"Error", message: "No hay conexion a Internet", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            presentViewController(alert, animated: true, completion: nil)
+           
+            
+            let seccionEntidad = NSEntityDescription.entityForName("Categorias", inManagedObjectContext: self.contexto!)
+            let peticion = seccionEntidad?.managedObjectModel.fetchRequestFromTemplateWithName("petCategoria", substitutionVariables: ["categoria": categorias[tipo-6000]])
+            do{
+                let secionEntidad2 = try self.contexto?.executeFetchRequest(peticion!)
+                if (secionEntidad2?.count > 0){
+                    let alert = UIAlertController(title:"Error", message: "No hay conexión a Internet, se han cargado datos almacenados.", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    presentViewController(alert, animated: true, completion: nil)
+                    //datos
+                    
+                    let peticion2 = seccionEntidad?.managedObjectModel.fetchRequestFromTemplateWithName("petCategoria", substitutionVariables: ["categoria": categorias[tipo-6000]])
+                    do{
+                        let seccionesEntidadG = try self.contexto?.executeFetchRequest(peticion2!)
+                        for seccionesEntidad2G in seccionesEntidadG!{
+                            let imagenesEntidadG = seccionesEntidad2G.valueForKey("tiene") as! Set<NSObject>
+                            for imagenesEntidad2G in imagenesEntidadG{
+                                let nom = imagenesEntidad2G.valueForKey("nombre") as! String
+                                self.top2.append(nom)
+                                let pos = imagenesEntidad2G.valueForKey("posicion") as! String
+                                self.posicion.append(Int(pos)!)
+                                let img = UIImage(data: imagenesEntidad2G.valueForKey("contenido") as! NSData)
+                                self.imagenes2.append(img!)
+                            }
+                        }
+                    }
+                    catch{
+                        
+                    }
+                    for i in 0 ..< posicion.count {
+                        for j in 0 ..< posicion.count {
+                            if posicion[j] == i{
+                                top.append(top2[j])
+                                imagenes.append(imagenes2[j])
+                            }
+                        }
+                    }
+                    return
+                }
+                else{
+                    let alert = UIAlertController(title:"Error", message: "No hay conexión a Internet.", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+            catch{
+                
+            }
+            
         }
         else {
+            let seccionEntidad = NSEntityDescription.entityForName("Categorias", inManagedObjectContext: self.contexto!)
+            let peticion = seccionEntidad?.managedObjectModel.fetchRequestFromTemplateWithName("petCategoria", substitutionVariables: ["categoria": categorias[tipo-6000]])
+            do{
+                let secionEntidad2 = try self.contexto?.executeFetchRequest(peticion!)
+                if (secionEntidad2?.count > 0){
+                    
+                    //datos
+                    
+                    let peticion2 = seccionEntidad?.managedObjectModel.fetchRequestFromTemplateWithName("petCategoria", substitutionVariables: ["categoria": categorias[tipo-6000]])
+                    do{
+                        let seccionesEntidadG = try self.contexto?.executeFetchRequest(peticion2!)
+                        for seccionesEntidad2G in seccionesEntidadG!{
+                            let imagenesEntidadG = seccionesEntidad2G.valueForKey("tiene") as! Set<NSObject>
+                            for imagenesEntidad2G in imagenesEntidadG{
+                                let nom = imagenesEntidad2G.valueForKey("nombre") as! String
+                                self.top2.append(nom)
+                                let pos = imagenesEntidad2G.valueForKey("posicion") as! String
+                                self.posicion.append(Int(pos)!)
+                                let img = UIImage(data: imagenesEntidad2G.valueForKey("contenido") as! NSData)
+                                self.imagenes2.append(img!)
+                            }
+                        }
+                    }
+                    catch{
+                        
+                    }
+                    for i in 0 ..< posicion.count {
+                        for j in 0 ..< posicion.count {
+                            if posicion[j] == i{
+                                top.append(top2[j])
+                                imagenes.append(imagenes2[j])
+                            }
+                        }
+                    }
+                    return
+                }
+            }
+            catch{
+                
+            }
+ 
+            let nuevaSeccionEntidad = NSEntityDescription.insertNewObjectForEntityForName("Categorias", inManagedObjectContext: self.contexto!)
+            nuevaSeccionEntidad.setValue(categorias[tipo-6000], forKey: "categoria")
             do{
                 let json = try NSJSONSerialization.JSONObjectWithData(datos!, options: NSJSONReadingOptions.MutableLeaves)
                 let dico1 = json as! NSDictionary
@@ -65,6 +166,16 @@ class ListadoDeApps: UITableViewController {
                     let apl = i["im:name"] as! NSDictionary
                     let app = apl["label"] as! NSString as String
                     self.top.append(app)
+                    let desc = i["summary"] as! NSDictionary
+                    let desc2 = desc["label"] as! NSString as String
+                    self.descripcion.append(desc2)
+                    let cat = i["category"] as! NSDictionary
+                    let cat2 = cat["attributes"] as! NSDictionary
+                    let cat3 = cat2["label"] as! NSString as String
+                    self.categoria.append(cat3)
+                    let aut = i["im:artist"] as! NSDictionary
+                    let aut2 = aut["label"] as! NSString as String
+                    self.autor.append(aut2)
                     let foto = i["im:image"] as! [NSDictionary]
                     var count = 0
                     for j in foto{
@@ -78,19 +189,53 @@ class ListadoDeApps: UITableViewController {
                         count += 1
                     }
                 }
-                
             }
             catch _ {
-                
             }
+            nuevaSeccionEntidad.setValue(crearAplicacionesEntidad(top,descripcion: descripcion,categoria: categoria,autor: autor,imagenes: imagenes).nombre, forKey: "tiene")
+            nuevaSeccionEntidad.setValue(crearAplicacionesEntidad(top,descripcion: descripcion,categoria: categoria,autor: autor,imagenes: imagenes).posicion, forKey: "tiene")
+            nuevaSeccionEntidad.setValue(crearAplicacionesEntidad(top,descripcion: descripcion,categoria: categoria,autor: autor,imagenes: imagenes).categoria, forKey: "tiene")
         }
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    func crearAplicacionesEntidad(nombres:[String],descripcion:[String],categoria:[String],autor:[String],imagenes:[UIImage])-> (nombre : Set<NSObject>, posicion: Set<NSObject>, imagen: Set<NSObject>, categoria: Set<NSObject>) {
+        var entidades = Set<NSObject>()
+        var entidades2 = Set<NSObject>()
+        var entidades3 = Set<NSObject>()
+        var entidades4 = Set<NSObject>()
+        var entidades5 = Set<NSObject>()
+        var entidades6 = Set<NSObject>()
+        var cont = 0
+        for nombre in nombres {
+            let imagenEntidad = NSEntityDescription.insertNewObjectForEntityForName("Aplicaciones", inManagedObjectContext: self.contexto!)
+            imagenEntidad.setValue(nombre, forKey: "nombre")
+            entidades.insert(imagenEntidad)
+            imagenEntidad.setValue("\(cont)", forKey: "posicion")
+            entidades2.insert(imagenEntidad)
+            imagenEntidad.setValue(UIImagePNGRepresentation(imagenes[cont]), forKey: "contenido")
+            entidades3.insert(imagenEntidad)
+            imagenEntidad.setValue(descripcion[cont], forKey: "descripcion")
+            entidades4.insert(imagenEntidad)
+            imagenEntidad.setValue(categoria[cont], forKey: "categoria")
+            entidades5.insert(imagenEntidad)
+            imagenEntidad.setValue(autor[cont], forKey: "autor")
+            entidades6.insert(imagenEntidad)
+            cont += 1
+        }
+        let resultado = (entidades,entidades2,entidades3,entidades4)
+        return resultado
+    }
+    /*
+    func crearImagenesEntidad(imagenes:[UIImage])-> Set<NSObject> {
+        var entidades = Set<NSObject>()
+        for imagen in imagenes {
+            let imagenEntidad = NSEntityDescription.insertNewObjectForEntityForName("Aplicaciones", inManagedObjectContext: self.contexto!)
+            imagenEntidad.setValue(UIImagePNGRepresentation(imagen), forKey: "contenido")
+            entidades.insert(imagenEntidad)
+        }
+        return entidades
+    }
+ */
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -169,6 +314,23 @@ class ListadoDeApps: UITableViewController {
         // Pass the selected object to the new view controller.
         let ip = self.tableView.indexPathForSelectedRow
         let cc = segue.destinationViewController as! ViewController
+        if posicion.count == 0{
+            let seccionEntidad = NSEntityDescription.entityForName("Categorias", inManagedObjectContext: self.contexto!)
+            let peticion2 = seccionEntidad?.managedObjectModel.fetchRequestFromTemplateWithName("petCategoria", substitutionVariables: ["categoria": categorias[tipo-6000]])
+            do{
+                let seccionesEntidadG = try self.contexto?.executeFetchRequest(peticion2!)
+                for seccionesEntidad2G in seccionesEntidadG!{
+                    let imagenesEntidadG = seccionesEntidad2G.valueForKey("tiene") as! Set<NSObject>
+                    for imagenesEntidad2G in imagenesEntidadG{
+                        let pos = imagenesEntidad2G.valueForKey("posicion") as! String
+                        self.posicion.append(Int(pos)!)
+                    }
+                }
+            }
+            catch{
+                
+            }
+        }
         if ip == nil{
             cc.url = urls2
             cc.po = 0
@@ -176,6 +338,8 @@ class ListadoDeApps: UITableViewController {
         else{
             cc.url = urls2
             cc.po = ip!.row
+            cc.posicion = posicion
+            cc.tipo = tipo
         }
         
     }

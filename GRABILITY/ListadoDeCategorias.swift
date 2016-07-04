@@ -7,14 +7,29 @@
 //
 
 import UIKit
+import CoreData
 
 class ListadoDeCategorias: UITableViewController {
-    var categorias = ["negocios", "clima", "utilidades", "viaje", "deportes" ,"redes sociales" ,"referencia", "productividad", "foto y video", "noticias", "navegacion", "musica", "estilo de vida", "salud y bellesa", "juegos", "finanzas", "entretenimiento", "educacion", "Libros", "todo", "medical", "revista", "catalogo", "comidas y bebidas"]
+    var categorias = ["negocios", "clima", "utilidades", "viaje", "deportes" ,"redes sociales" ,"referencia", "productividad", "foto y video", "noticias", "navegación", "música", "estilo de vida", "salud y belleza", "juegos", "finanzas", "entretenimiento", "educación", "Libros", "todo", "medical", "revista", "catalogo", "comidas y bebidas"]
     var imagenes: Array<UIImage> = Array<UIImage>()
+    
+     var contexto:NSManagedObjectContext? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.contexto = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let seccionEntidad = NSEntityDescription.entityForName("Categorias", inManagedObjectContext: self.contexto!)
+        let peticion = seccionEntidad?.managedObjectModel.fetchRequestTemplateForName("petCategorias")
+        do{
+            let seccionesEntidad = try self.contexto?.executeFetchRequest(peticion!)
+            for entity in seccionesEntidad! {
+                self.contexto!.deleteObject(entity as! NSManagedObject)
+            }
+        }
+        catch{
+            
+        }
+       
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
